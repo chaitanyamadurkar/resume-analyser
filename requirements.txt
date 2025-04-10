@@ -1,0 +1,12 @@
+nltk==3.9.1
+pafy==0.5.5
+pandas==2.0.3
+pdfminer3==2018.12.3.0
+Pillow==11.1.0
+plotly==6.0.1
+PyMySQL==1.1.1
+pyresparser==1.0.6
+spacy==2.3.5
+streamlit==1.40.1
+streamlit_tags==1.2.8
+youtube_dl==2021.12.17
