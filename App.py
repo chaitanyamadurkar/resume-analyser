@@ -3,7 +3,8 @@ import nltk
 import spacy
 nltk.download('stopwords')
 spacy.load('en_core_web_sm')
-
+import pickle
+from pathlib import Path
 import pandas as pd
 import base64, random
 import time, datetime
@@ -21,6 +22,8 @@ from Courses import ds_course, web_course, android_course, ios_course, uiux_cour
 import pafy
 import plotly.express as px
 import youtube_dl
+import streamlit_authenticator as stauth
+
 
 def fetch_yt_video(link):
     video = pafy.new(link)
@@ -87,6 +90,20 @@ cursor = connection.cursor()
 def insert_data(name, email, res_score, timestamp, no_of_pages, reco_field, cand_level, skills, recommended_skills,
                 courses):
     DB_table_name = 'user_data'
+     # First check if a record with the same name and email already exists
+    check_duplicate_sql = f"SELECT ID FROM {DB_table_name} WHERE Name = %s AND Email_ID = %s"
+    cursor.execute(check_duplicate_sql, (name, email))
+    duplicate_records = cursor.fetchall()
+    
+    # If duplicates exist, delete the older entries
+    if duplicate_records:
+        for record in duplicate_records:
+            delete_sql = f"DELETE FROM {DB_table_name} WHERE ID = %s"
+            cursor.execute(delete_sql, (record[0],))
+        
+        # Log the cleanup action
+        print(f"Removed {len(duplicate_records)} older entries for {name} ({email})")
+    
     insert_sql = "insert into " + DB_table_name + """
     values (0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
     rec_values = (
@@ -189,7 +206,9 @@ def run():
                                 'illustrator', 'adobe after effects', 'after effects', 'adobe premier pro',
                                 'premier pro', 'adobe indesign', 'indesign', 'wireframe', 'solid', 'grasp',
                                 'user research', 'user experience']
-
+                devops_keyword = ['Github', 'Cloud', 'Security', 'Automation', 'Docker', 'System administration', 
+                                  'Sql', 'Linux', 'Aws', 'Scripting', 'System', 'Shell']
+                
                 recommended_skills = []
                 reco_field = ''
                 rec_course = ''
@@ -280,7 +299,21 @@ def run():
                             unsafe_allow_html=True)
                         rec_course = course_recommender(uiux_course)
                         break
-
+                         ## Devops Development
+                    elif i.lower() in devops_keyword:
+                        print(i.lower())
+                        reco_field = 'DevOps'
+                        st.success("** Our analysis says you are looking for DevOps  Jobs **")
+                        recommended_skills = [ 'Github', 'Cloud', 'Security', 'Automation', 'Docker', 'System administration',
+                                              'Sql', 'Testing', 'Linux', 'Operations', 'Process', 'Aws', 'Administration', 'Scripting', 'System', 'Logging', 'Shell']
+                        recommended_keywords = st_tags(label='### Recommended skills for you.',
+                                                       text='Recommended skills generated from System',
+                                                       value=recommended_skills, key='7')
+                        st.markdown(
+                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            unsafe_allow_html=True)
+                        rec_course = course_recommender(ios_course)
+                        break
                 #
                 ## Insert into table
                 ts = time.time()
@@ -291,7 +324,7 @@ def run():
                 ### Resume writing recommendation
                 st.subheader("**Resume Tips & Ideas💡**")
                 resume_score = 0
-                if 'Objective' in resume_text:
+                if 'Objective' or 'SUMMERY' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Objective</h4>''',
@@ -301,14 +334,14 @@ def run():
                         '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add your career objective, it will give your career intension to the Recruiters.</h4>''',
                         unsafe_allow_html=True)
 
-                if 'Declaration' in resume_text:
+                if 'EXPERIENCE' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration✍/h4>''',
+                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Experience✍</h4>''',
                         unsafe_allow_html=True)
                 else:
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration✍. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
+                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Experience✍. It will help you stand out.</h4>''',
                         unsafe_allow_html=True)
 
                 if 'Hobbies' or 'Interests' in resume_text:
@@ -331,7 +364,7 @@ def run():
                         '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements🏅. It will show that you are capable for the required position.</h4>''',
                         unsafe_allow_html=True)
 
-                if 'Projects' in resume_text:
+                if 'Projects' or 'PEOJECTS' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects👨‍💻 </h4>''',
@@ -371,13 +404,29 @@ def run():
         ## Admin Side
         st.success('Welcome to Admin Side')
         # st.sidebar.subheader('**ID / Password Required!**')
+        # --- USER AUTHENTICATION ---
+        names = ["Group CA8 ", "Chaitanya madurkar"]
+        usernames = ["ca8", "chaitanya"]
 
-        ad_user = st.text_input("Username")
-        ad_password = st.text_input("Password", type='password')
-        if st.button('Login'):
-            if ad_user == 'group ca8' and ad_password == 'c1234':
-                st.success("Welcome admin")
-                # Display Data
+        # load hashed passwords
+        file_path = Path(__file__).parent / "hashed_pw.pkl"
+        with file_path.open("rb") as file:
+            hashed_passwords = pickle.load(file)
+
+        authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
+            "sales_dashboard", "abcdef", cookie_expiry_days=30)
+
+        name, authentication_status, username = authenticator.login("Login", "main")
+
+        if authentication_status == False:
+            st.error("Username/password is incorrect")
+
+        if authentication_status == None:
+            st.warning("Please enter your username and password")
+            
+        
+        if authentication_status:
+             # Display Data
                 cursor.execute('''SELECT*FROM user_data''')
                 data = cursor.fetchall()
                 st.header("**User's👨‍💻 Data**")
@@ -385,7 +434,43 @@ def run():
                                                  'Predicted Field', 'User Level', 'Actual Skills', 'Recommended Skills',
                                                  'Recommended Course'])
                 st.dataframe(df)
-                st.markdown(get_table_download_link(df, 'User_Data.csv', 'Download Report'), unsafe_allow_html=True)
+
+
+                # Add the filtering functionality here
+                st.header("Filter Data")
+
+                # Get unique values for filter options
+                unique_fields = df['Predicted Field'].unique().tolist()
+                unique_levels = df['User Level'].unique().tolist()
+
+                # Create filter widgets in a side-by-side layout
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    selected_field = st.selectbox("Filter by Predicted Field", 
+                                                ["All Fields"] + unique_fields)
+
+                with col2:
+                    selected_level = st.selectbox("Filter by User Level", 
+                                                ["All Levels"] + unique_levels)
+
+                # Apply filters
+                filtered_df = df.copy()
+
+                if selected_field != "All Fields":
+                    filtered_df = filtered_df[filtered_df['Predicted Field'] == selected_field]
+
+                if selected_level != "All Levels":
+                    filtered_df = filtered_df[filtered_df['User Level'] == selected_level]
+
+                # Display filtered data
+                st.header(f"Filtered Data ({len(filtered_df)} records)")
+                st.dataframe(filtered_df)
+
+                # Provide download link for filtered data
+                st.markdown(get_table_download_link(filtered_df, 'Filtered_User_Data.csv', 'Download Filtered Report'), 
+                            unsafe_allow_html=True)
+
                 ## Admin Side Data
                 query = 'select * from user_data;'
                 plot_data = pd.read_sql(query, connection)
@@ -406,11 +491,8 @@ def run():
                 fig = px.pie(df, values=values, names=labels, title="Pie-Chart📈 for User's👨‍💻 Experienced Level")
                 st.plotly_chart(fig)
 
+                authenticator.logout("Logout", "sidebar")
 
-            else:
-                st.error("Wrong ID & Password Provided")
-
-            
-
+                
 
 run()
