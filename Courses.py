@@ -51,7 +51,49 @@ uiux_course = [['Google UX Design Professional Certificate','https://www.courser
                ['Adobe XD Tutorial: User Experience Design Course [Free]','https://youtu.be/68w2VwalD5w'],
                ['Adobe XD for Beginners [Free]','https://youtu.be/WEljsc2jorI'],
                ['Adobe XD in Simple Way','https://learnux.io/course/adobe-xd']]
+cloud_course = [['AWS Certified Solutions Architect - Associate by A Cloud Guru', 'https://acloudguru.com/course/aws-certified-solutions-architect-associate-saa-c02'],
+              ['Google Cloud Platform Fundamentals: Core Infrastructure', 'https://www.coursera.org/learn/gcp-fundamentals'],
+              ['Microsoft Azure Fundamentals (AZ-900) Certification Course', 'https://www.udemy.com/course/microsoft-azure-fundamentals-az-900-certification-course/'],
+              ['Cloud Computing Specialization by University of Illinois', 'https://www.coursera.org/specializations/cloud-computing'],
+              ['Cloud Architecture with Google Cloud Professional Certificate', 'https://www.coursera.org/professional-certificates/gcp-cloud-architect'],
+              ['AWS Certified Developer - Associate Course [Free]', 'https://youtu.be/RrKRN9zRBWs'],
+              ['Kubernetes for the Absolute Beginners', 'https://www.udemy.com/course/learn-kubernetes/'],
+              ['Docker and Kubernetes: The Complete Guide', 'https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/'],
+              ['Terraform for AWS - Beginner to Advanced', 'https://www.udemy.com/course/terraform-for-aws-with-sre-iac-devops-real-world-demos/'],
+              ['Cloud Engineer Nanodegree by Udacity', 'https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991']]
 
+backend_course = [['Node.js API Masterclass With Express & MongoDB', 'https://www.udemy.com/course/nodejs-api-masterclass/'],
+                 ['The Complete Node.js Developer Course', 'https://www.udemy.com/course/the-complete-nodejs-developer-course-2/'],
+                 ['Spring Framework 5: Beginner to Guru', 'https://www.udemy.com/course/spring-framework-5-beginner-to-guru/'],
+                 ['Java Programming Masterclass covering Java 11 & Java 17', 'https://www.udemy.com/course/java-the-complete-java-developer-course/'],
+                 ['Python Django - The Complete Course [Free]', 'https://youtu.be/PtQiiknWUcI'],
+                 ['Complete SQL and Databases Bootcamp', 'https://www.udemy.com/course/complete-sql-databases-bootcamp-zero-to-mastery/'],
+                 ['FastAPI - The Complete Course', 'https://www.udemy.com/course/fastapi-the-complete-course/'],
+                 ['Ruby on Rails for Beginners', 'https://www.codecademy.com/learn/learn-ruby-on-rails'],
+                 ['ASP.NET Core 6 Web API Fundamentals', 'https://www.pluralsight.com/courses/asp-dot-net-core-6-web-api-fundamentals'],
+                 ['GraphQL by Example', 'https://www.udemy.com/course/graphql-by-example/']]
+
+cybersecurity_course = [['CompTIA Security+ Certification Course', 'https://www.udemy.com/course/securityplus/'],
+                        ['Practical Ethical Hacking - The Complete Course', 'https://www.udemy.com/course/practical-ethical-hacking/'],
+                        ['Web Security & Bug Bounty: Learn Penetration Testing', 'https://www.udemy.com/course/web-security-bug-bounty-learn-penetration-testing/'],
+                        ['Certified Ethical Hacker (CEH) by EC-Council', 'https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/'],
+                        ['Cybersecurity Specialization by University of Maryland', 'https://www.coursera.org/specializations/cyber-security'],
+                        ['The Complete Cyber Security Course: Hackers Exposed', 'https://www.udemy.com/course/the-complete-internet-security-privacy-course-volume-1/'],
+                        ['Learn Ethical Hacking From Scratch [Free]', 'https://youtu.be/3Kq1MIfTWCE'],
+                        ['Mobile Security: Reverse Engineering for Android Apps', 'https://www.linkedin.com/learning/mobile-security-reverse-engineering-for-android-apps'],
+                        ['CISSP Certification: Complete CISSP Course', 'https://www.udemy.com/course/cissp-certification-training-complete-cissp-prep-course/'],
+                        ['Cyber Security Nanodegree by Udacity', 'https://www.udacity.com/course/security-analyst-nanodegree--nd335']]
+
+ai_engineering_course = [['Deep Learning Specialization by Andrew NG', 'https://www.coursera.org/specializations/deep-learning'],
+                         ['Artificial Intelligence: Reinforcement Learning in Python', 'https://www.udemy.com/course/artificial-intelligence-reinforcement-learning-in-python/'],
+                         ['Natural Language Processing with Deep Learning', 'https://www.coursera.org/learn/nlp-with-deep-learning'],
+                         ['TensorFlow Developer Certificate in 2023: Zero to Mastery', 'https://www.udemy.com/course/tensorflow-developer-certificate-machine-learning-zero-to-mastery/'],
+                         ['AI For Everyone by Andrew NG [Free]', 'https://www.coursera.org/learn/ai-for-everyone'],
+                         ['PyTorch for Deep Learning with Python Bootcamp', 'https://www.udemy.com/course/pytorch-for-deep-learning-with-python-bootcamp/'],
+                         ['Complete Guide to Transformers and Large Language Models', 'https://www.deeplearning.ai/courses/transformers-and-large-language-models/'],
+                         ['AI Product Manager Nanodegree by Udacity', 'https://www.udacity.com/course/ai-product-manager-nanodegree--nd088'],
+                         ['Practical Deep Learning for Coders by fast.ai [Free]', 'https://course.fast.ai/'],
+                         ['Hugging Face NLP Course [Free]', 'https://huggingface.co/course/chapter1/1']]
 resume_videos = []
 
 interview_videos = []

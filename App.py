@@ -18,7 +18,7 @@ import io, random
 from streamlit_tags import st_tags
 from PIL import Image
 import pymysql
-from Courses import ds_course, web_course, android_course, ios_course, uiux_course, resume_videos, interview_videos
+from Courses import ds_course, web_course, android_course, ios_course, uiux_course, cloud_course, backend_course, cybersecurity_course, ai_engineering_course, resume_videos, interview_videos
 import pafy
 import plotly.express as px
 import youtube_dl
@@ -208,6 +208,23 @@ def run():
                                 'user research', 'user experience']
                 devops_keyword = ['Github', 'Cloud', 'Security', 'Automation', 'Docker', 'System administration', 
                                   'Sql', 'Linux', 'Aws', 'Scripting', 'System', 'Shell']
+                cloud_keyword = ['aws', 'azure', 'gcp', 'cloud computing', 'kubernetes', 'terraform', 'cloud architecture',
+                                'cloud security', 'serverless', 'microservices', 'docker', 'lambda', 'ec2', 's3', 
+                                'cloudformation', 'cloud migration', 'devops', 'iaas', 'paas', 'saas']
+                
+                backend_keyword = ['nodejs', 'django', 'flask', 'spring', 'java', 'php', 'ruby', 'python', 'api', 
+                                   'rest', 'graphql', 'microservices', 'database', 'sql', 'nosql', 'mongodb', 
+                                   'postgresql', 'mysql', 'express', 'orm', 'server', 'backend']
+                
+                cybersecurity_keyword = ['security', 'cybersecurity', 'ethical hacking', 'penetration testing', 'network security',
+                                        'encryption', 'firewall', 'siem', 'vulnerability assessment', 'threat analysis',
+                                        'incident response', 'security audit', 'compliance', 'secure coding', 'identity management',
+                                        'authentication', 'authorization', 'cryptography', 'security operations']
+                
+                ai_keyword = ['artificial intelligence', 'machine learning', 'deep learning', 'neural networks', 'nlp',
+                             'computer vision', 'reinforcement learning', 'data science', 'tensorflow', 'pytorch',
+                             'keras', 'scikit-learn', 'opencv', 'generative ai', 'llm', 'transformers', 'bert',
+                             'gpt', 'ai ethics', 'ml ops']
                 
                 recommended_skills = []
                 reco_field = ''
@@ -314,7 +331,80 @@ def run():
                             unsafe_allow_html=True)
                         rec_course = course_recommender(ios_course)
                         break
-                #
+                         ## Cloud Engineering
+                    elif i.lower() in cloud_keyword:
+                        print(i.lower())
+                        reco_field = 'Cloud Engineering'
+                        st.success("** Our analysis says you are looking for Cloud Engineering Jobs **")
+                        recommended_skills = ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Docker', 'Terraform', 'IaC',
+                                              'Serverless', 'CI/CD', 'Cloud Architecture', 'Cloud Security', 
+                                              'Microservices', 'Cloud Migration', 'Lambda', 'EC2', 'S3', 
+                                              'CloudFormation', 'Cloud Networking']
+                        recommended_keywords = st_tags(label='### Recommended skills for you.',
+                                                       text='Recommended skills generated from System',
+                                                       value=recommended_skills, key='8')
+                        st.markdown(
+                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            unsafe_allow_html=True)
+                        rec_course = course_recommender(cloud_course) # You should create cloud_course list
+                        break
+                    
+                    ## Backend Developer
+                    elif i.lower() in backend_keyword:
+                        print(i.lower())
+                        reco_field = 'Backend Development'
+                        st.success("** Our analysis says you are looking for Backend Development Jobs **")
+                        recommended_skills = ['Node.js', 'Express', 'Django', 'Flask', 'Spring Boot', 'Java', 
+                                              'Python', 'Ruby', 'PHP', 'REST API', 'GraphQL', 'SQL', 'NoSQL', 
+                                              'MongoDB', 'PostgreSQL', 'MySQL', 'ORM', 'Microservices',
+                                              'Authentication', 'Authorization', 'Docker', 'Server Architecture']
+                        recommended_keywords = st_tags(label='### Recommended skills for you.',
+                                                       text='Recommended skills generated from System',
+                                                       value=recommended_skills, key='9')
+                        st.markdown(
+                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            unsafe_allow_html=True)
+                        rec_course = course_recommender(backend_course) # Consider creating backend_course list
+                        break
+                    
+                    ## Cyber Security
+                    elif i.lower() in cybersecurity_keyword:
+                        print(i.lower())
+                        reco_field = 'Cyber Security'
+                        st.success("** Our analysis says you are looking for Cyber Security Jobs **")
+                        recommended_skills = ['Network Security', 'Penetration Testing', 'Ethical Hacking', 
+                                              'Security Operations', 'Vulnerability Assessment', 'Threat Analysis',
+                                              'Incident Response', 'Firewall', 'SIEM', 'Compliance', 'Security Audit',
+                                              'Encryption', 'Cryptography', 'Identity Management', 'Secure Coding', 
+                                              'Risk Assessment', 'Forensics', 'Security Architecture']
+                        recommended_keywords = st_tags(label='### Recommended skills for you.',
+                                                       text='Recommended skills generated from System',
+                                                       value=recommended_skills, key='10')
+                        st.markdown(
+                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            unsafe_allow_html=True)
+                        rec_course = course_recommender(cybersecurity_course) # You should create cybersecurity_course list
+                        break
+                    
+                    ## AI Engineer
+                    elif i.lower() in ai_keyword:
+                        print(i.lower())
+                        reco_field = 'AI Engineering'
+                        st.success("** Our analysis says you are looking for AI Engineering Jobs **")
+                        recommended_skills = ['Machine Learning', 'Deep Learning', 'Neural Networks', 'NLP', 
+                                              'Computer Vision', 'TensorFlow', 'PyTorch', 'Keras', 'Scikit-learn',
+                                              'Reinforcement Learning', 'MLOps', 'Feature Engineering', 'OpenCV',
+                                              'Generative AI', 'LLMs', 'Transformers', 'BERT', 'GPT', 
+                                              'AI Ethics', 'Model Deployment']
+                        recommended_keywords = st_tags(label='### Recommended skills for you.',
+                                                       text='Recommended skills generated from System',
+                                                       value=recommended_skills, key='11')
+                        st.markdown(
+                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            unsafe_allow_html=True)
+                        rec_course = course_recommender(ai_engineering_course) # Consider creating ai_course list
+                        break
+                
                 ## Insert into table
                 ts = time.time()
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
